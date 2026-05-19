@@ -179,7 +179,7 @@
     </div>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-brand-card/95 backdrop-blur-xl border-b border-white/10 px-4 py-6 shadow-2xl origin-top transition-all">
+    <div id="mobile-menu" class="opacity-0 invisible -translate-y-4 pointer-events-none md:hidden absolute top-[100%] left-0 w-full bg-brand-card/95 backdrop-blur-xl border-b border-white/10 px-4 py-6 shadow-2xl origin-top transition-all duration-300 ease-out z-40">
       <div class="flex flex-col space-y-2">
         <a href="#home" class="mobile-link text-base font-medium text-white hover:text-brand-gold p-3 rounded-lg hover:bg-white/5 transition-colors">Início</a>
         <a href="#sobre" class="mobile-link text-base font-medium text-white hover:text-brand-gold p-3 rounded-lg hover:bg-white/5 transition-colors">Sobre</a>
@@ -229,7 +229,7 @@
                   <ellipse cx="165" cy="132" rx="18" ry="65" transform="rotate(-52 165 132)" fill="url(#blueGradKMobile)" opacity="0.9" />
                   <ellipse cx="165" cy="48" rx="18" ry="65" transform="rotate(52 165 48)" fill="url(#goldGradKMobile)" opacity="0.95" />
                 </g>
-                <text x="120" y="235" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="48" text-anchor="middle" fill="#ffffff" letter-spacing="5">Kadri</text>
+                <text x="120" y="235" font-family="'Playfair Display', serif" font-style="italic" font-weight="700" font-size="48" text-anchor="middle" fill="#ffffff" letter-spacing="3">Kadri</text>
               </svg>
             </div>
           </div>
@@ -293,7 +293,7 @@
                   <!-- Gold petal (top right) drawn after blue so it stays on top -->
                   <ellipse cx="165" cy="48" rx="18" ry="65" transform="rotate(52 165 48)" fill="url(#goldGradK)" opacity="0.95" />
                 </g>
-                <text x="120" y="235" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="48" text-anchor="middle" fill="#ffffff" letter-spacing="5">Kadri</text>
+                <text x="120" y="235" font-family="'Playfair Display', serif" font-style="italic" font-weight="700" font-size="48" text-anchor="middle" fill="#ffffff" letter-spacing="3">Kadri</text>
               </svg>
             </div>
 
@@ -539,7 +539,7 @@
                 <!-- Gold petal (top right) drawn after blue so it stays on top -->
                 <ellipse cx="165" cy="48" rx="18" ry="65" transform="rotate(52 165 48)" fill="url(#goldGradCertK)" opacity="0.95" />
               </g>
-              <text x="120" y="235" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="48" text-anchor="middle" fill="#ffffff" letter-spacing="5">Kadri</text>
+              <text x="120" y="235" font-family="'Playfair Display', serif" font-style="italic" font-weight="700" font-size="48" text-anchor="middle" fill="#ffffff" letter-spacing="3">Kadri</text>
             </svg>
             <h4 class="text-2xl font-serif text-brand-gold uppercase tracking-[0.2em] mb-2 font-bold select-none text-glow">Certificado</h4>
             <p class="text-white/50 text-[10px] uppercase tracking-[0.3em] mb-6 select-none font-sans">De Conclusão</p>
@@ -894,18 +894,33 @@
     const mobileLinks = document.querySelectorAll('.mobile-link');
 
     menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-      iconMenu.classList.toggle('hidden');
-      iconClose.classList.toggle('hidden');
+      const isOpen = mobileMenu.classList.contains('opacity-100');
+      if (isOpen) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
     });
 
     mobileLinks.forEach(link => {
       link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        iconMenu.classList.remove('hidden');
-        iconClose.classList.add('hidden');
+        closeMobileMenu();
       });
     });
+
+    function openMobileMenu() {
+      mobileMenu.classList.remove('opacity-0', 'invisible', '-translate-y-4', 'pointer-events-none');
+      mobileMenu.classList.add('opacity-100', 'visible', 'translate-y-0', 'pointer-events-auto');
+      iconMenu.classList.add('hidden');
+      iconClose.classList.remove('hidden');
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0', 'pointer-events-auto');
+      mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-4', 'pointer-events-none');
+      iconMenu.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    }
 
     // Dummy Mock Data para Cursos e Filters
     const categorias = [
