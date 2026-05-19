@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kadri - Centro de Formação Profissional</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      safelist: [
+        'bg-brand-card/80', 'backdrop-blur-lg', 'border-b', 'border-white/5', 'shadow-2xl',
+        'py-2', 'py-4', 'bg-brand-card/0', 'border-white/0',
+        'opacity-0', '-translate-x-2', 'max-w-0', 
+        'opacity-100', 'translate-x-0', 'max-w-[100px]',
+        'scale-0', 'pointer-events-none', 'scale-100', 'pointer-events-auto'
+      ],
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif']
+          },
+          colors: {
+            brand: {
+              dark: '#030712', /* slate-950 */
+              card: '#0f172a', /* slate-900 */
+              gold: '#D4AD52',
+              goldLight: '#FDE047',
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-fast': 'float 4s ease-in-out infinite',
+            'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'spin-slow': 'spin 15s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-15px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    ::selection { background-color: #D4AD52; color: #030712; }
+    
+    body {
+      background-color: #030712;
+      color: #cbd5e1;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 0.025em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Scroll Animations Custom Class */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px) scale(0.98);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .delay-100 { transition-delay: 100ms; }
+    .delay-200 { transition-delay: 200ms; }
+    .delay-300 { transition-delay: 300ms; }
+
+    /* Modern Mesh Grid Background */
+    .bg-grid-pattern {
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(circle at top, black 20%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at top, black 20%, transparent 80%);
+    }
+
+    /* Glassmorphism Utilities */
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Gradient Text utility */
+    .text-gradient {
+      background: linear-gradient(135deg, #FDE047 0%, #D4AD52 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-glow {
+      text-shadow: 0 0 25px rgba(212, 173, 82, 0.5);
+    }
+
+    /* Custom scrollbar for better overall look */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #030712; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #D4AD52; }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 w-full z-50 transition-all duration-500 bg-brand-card/0 border-b border-transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div id="nav-inner" class="flex justify-between items-center h-20 md:h-24 transition-all duration-500">
+        <!-- Logo -->
+        <a href="#home" class="flex items-center group -ml-2">
+          <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" class="h-12 w-auto md:h-14 group-hover:scale-105 transition-transform duration-300">
+            <defs>
+              <linearGradient id="goldGradNav" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#C59438" />
+                <stop offset="50%" stop-color="#EBC472" />
+                <stop offset="100%" stop-color="#F2DF99" />
+              </linearGradient>
+              <linearGradient id="blueGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#7DD3FC" />
+                <stop offset="100%" stop-color="#2563EB" />
+              </linearGradient>
+            </defs>
+            <g transform="translate(10, 15)">
+              <ellipse cx="24" cy="90" rx="6" ry="30" fill="#ffffff" />
+              <ellipse cx="54" cy="90" rx="9" ry="46" fill="#ffffff" />
+              <ellipse cx="88" cy="90" rx="12" ry="62" fill="#ffffff" />
+              <ellipse cx="126" cy="90" rx="15" ry="78" fill="#ffffff" />
+              <ellipse cx="165" cy="132" rx="18" ry="65" transform="rotate(-52 165 132)" fill="url(#blueGradNav)" opacity="0.9" />
+              <ellipse cx="165" cy="48" rx="18" ry="65" transform="rotate(52 165 48)" fill="url(#goldGradNav)" opacity="0.95" />
+            </g>
+          </svg>
+          <span id="nav-brand-text" class="text-xl md:text-2xl font-bold tracking-wide text-white font-serif transition-all duration-500 opacity-0 -translate-x-2 max-w-0 overflow-hidden inline-block">adri</span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <nav class="hidden md:flex space-x-1 glass-panel px-3 py-1.5 rounded-full">
+          <a href="#home" class="px-5 py-2 text-sm font-medium text-slate-300 hover:text-brand-gold hover:bg-white/5 rounded-full transition-all">Início</a>
+          <a href="#sobre" class="px-5 py-2 text-sm font-medium text-slate-300 hover:text-brand-gold hover:bg-white/5 rounded-full transition-all">Sobre</a>
+          <a href="#cursos" class="px-5 py-2 text-sm font-medium text-slate-300 hover:text-brand-gold hover:bg-white/5 rounded-full transition-all">Formações</a>
+          <a href="#certificado" class="px-5 py-2 text-sm font-medium text-slate-300 hover:text-brand-gold hover:bg-white/5 rounded-full transition-all">Certificado</a>
+          <a href="#" id="portal-aluno-desktop" class="hidden px-5 py-2 text-sm font-medium text-brand-gold hover:text-brand-gold hover:bg-white/5 rounded-full transition-all">Portal do Aluno</a>
+        </nav>
+
+        <div class="hidden md:flex items-center gap-5">
+          <a href="#contato" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Contato</a>
+          <a href="#cursos" class="px-6 py-2.5 bg-brand-gold text-brand-dark text-sm font-bold rounded-full hover:bg-brand-goldLight transition-all shadow-[0_5px_20px_rgba(212,173,82,0.3)] hover:shadow-[0_8px_25px_rgba(212,173,82,0.5)] transform hover:-translate-y-0.5">
+            Matricule-se
+          </a>
+        </div>
+
+        <!-- Mobile/Portal Actions -->
+        <div class="flex items-center gap-3">
+          <a href="#" id="portal-aluno-mobile" class="hidden md:hidden px-4 py-1.5 bg-brand-gold text-brand-dark text-[10px] font-bold rounded-full transition-all shadow-lg active:scale-95 uppercase tracking-wider">
+            Portal do Aluno
+          </a>
+          <button id="menu-btn" class="md:hidden text-slate-300 hover:text-white p-2 glass-panel rounded-lg">
+            <i data-lucide="menu" id="icon-menu" class="w-5 h-5"></i>
+            <i data-lucide="x" id="icon-close" class="w-5 h-5 hidden"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-brand-card/95 backdrop-blur-xl border-b border-white/10 px-4 py-6 shadow-2xl origin-top transition-all">
+      <div class="flex flex-col space-y-2">
+        <a href="#home" class="mobile-link text-base font-medium text-white hover:text-brand-gold p-3 rounded-lg hover:bg-white/5 transition-colors">Início</a>
+        <a href="#sobre" class="mobile-link text-base font-medium text-white hover:text-brand-gold p-3 rounded-lg hover:bg-white/5 transition-colors">Sobre</a>
+        <a href="#cursos" class="mobile-link text-base font-medium text-white hover:text-brand-gold p-3 rounded-lg hover:bg-white/5 transition-colors">Cursos</a>
+        <a href="#certificado" class="mobile-link text-base font-medium text-white hover:text-brand-gold p-3 rounded-lg hover:bg-white/5 transition-colors">Certificado</a>
+        <a href="#depoimentos" class="mobile-link text-base font-medium text-white hover:text-brand-gold p-3 rounded-lg hover:bg-white/5 transition-colors">Depoimentos</a>
+        <a href="#contato" class="mobile-link text-base font-medium text-white hover:text-brand-gold p-3 rounded-lg hover:bg-white/5 transition-colors">Contato</a>
+        <div class="h-px w-full bg-white/10 my-3"></div>
+        <a href="#cursos" class="mobile-link px-6 py-4 mt-2 text-center bg-brand-gold text-brand-dark font-bold rounded-xl shadow-lg">Matricule-se Agora</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section id="home" class="relative pt-40 pb-20 md:pt-48 md:pb-32 min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <!-- Visual Effects -->
+    <div class="absolute inset-0 bg-grid-pattern pointer-events-none z-0"></div>
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-gold/15 rounded-full blur-[100px] pointer-events-none animate-pulse-slow"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[120px] pointer-events-none animate-pulse-slow lg:opacity-100 opacity-50" style="animation-delay: 2s;"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+      <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-8">
+        
+        <!-- Text Content -->
+        <div class="w-full lg:w-1/2 text-center lg:text-left reveal">
+          
+          <!-- Mobile/Tablet Hero Logo -->
+          <div class="flex lg:hidden justify-center mb-6 -mt-8 w-full">
+            <div class="relative inline-flex justify-center items-center drop-shadow-2xl animate-float">
+              <svg viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg" class="h-44 md:h-56 w-auto transition-transform duration-700 hover:-translate-y-2 hover:drop-shadow-[0_0_30px_rgba(212,173,82,0.8)] drop-shadow-[0_0_15px_rgba(212,173,82,0.4)]">
+                <defs>
+                  <linearGradient id="goldGradKMobile" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#C59438" />
+                    <stop offset="50%" stop-color="#EBC472" />
+                    <stop offset="100%" stop-color="#F2DF99" />
+                  </linearGradient>
+                  <linearGradient id="blueGradKMobile" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#7DD3FC" />
+                    <stop offset="100%" stop-color="#2563EB" />
+                  </linearGradient>
+                </defs>
+                <g transform="translate(10, 15)">
+                  <ellipse cx="24" cy="90" rx="6" ry="30" fill="#ffffff" />
+                  <ellipse cx="54" cy="90" rx="9" ry="46" fill="#ffffff" />
+                  <ellipse cx="88" cy="90" rx="12" ry="62" fill="#ffffff" />
+                  <ellipse cx="126" cy="90" rx="15" ry="78" fill="#ffffff" />
+                  <ellipse cx="165" cy="132" rx="18" ry="65" transform="rotate(-52 165 132)" fill="url(#blueGradKMobile)" opacity="0.9" />
+                  <ellipse cx="165" cy="48" rx="18" ry="65" transform="rotate(52 165 48)" fill="url(#goldGradKMobile)" opacity="0.95" />
+                </g>
+                <text x="120" y="235" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="48" text-anchor="middle" fill="#ffffff" letter-spacing="5">Kadri</text>
+              </svg>
+            </div>
+          </div>
+
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel text-xs font-bold text-brand-gold uppercase tracking-widest mb-8 border border-brand-gold/20 shadow-inner">
+            <span class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
+            Centro de Formação Profissional
+          </div>
+          
+          <h1 class="text-5xl sm:text-6xl md:text-7xl font-serif font-bold text-white tracking-tight mb-6 leading-[1.1]">
+            Sua Carreira em <br class="hidden md:block"/>
+            <span class="text-gradient">Destaque</span>
+          </h1>
+          
+          <p class="text-lg md:text-xl text-slate-400 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light text-balance text-center lg:text-left">
+            Mais de <strong class="text-white font-medium">80 cursos práticos</strong> para transformar seu conhecimento em oportunidades reais do mercado atual.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <a href="#cursos" class="w-full sm:w-auto px-8 py-4 bg-brand-gold text-brand-dark text-base font-bold rounded-xl hover:bg-brand-goldLight transition-all shadow-[0_10px_30px_-10px_rgba(212,173,82,0.5)] transform hover:-translate-y-1 flex items-center justify-center gap-2 group">
+              Explorar Formações
+              <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <a href="#contato" class="w-full sm:w-auto px-8 py-4 glass-panel text-white text-base font-medium rounded-xl hover:bg-white/10 hover:border-white/20 transition-all flex items-center justify-center gap-2">
+              Fale Conosco
+            </a>
+          </div>
+        </div>
+
+        <!-- Floating UI / Visual Hero Art -->
+        <div class="w-full lg:w-1/2 relative reveal delay-200 hidden lg:block">
+          <div class="relative w-full max-w-lg mx-auto aspect-square flex items-center justify-center">
+            
+            <!-- Orbit rings -->
+            <div class="absolute inset-4 rounded-full border border-white/5 animate-spin-slow"></div>
+            <div class="absolute inset-16 rounded-full border border-brand-gold/10 animation-delay-500 animate-[spin_20s_linear_infinite_reverse]"></div>
+            
+            <!-- Center piece -->
+            <div class="relative glass-panel p-8 rounded-[2rem] z-20 shadow-2xl border-white/10 backdrop-blur-xl animate-float before:absolute before:inset-0 before:bg-gradient-to-b before:from-white/10 before:to-transparent before:rounded-[2rem] before:pointer-events-none">
+              <svg viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg" class="h-28 w-auto">
+                <defs>
+                  <linearGradient id="goldGradK" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#C59438" />
+                    <stop offset="50%" stop-color="#EBC472" />
+                    <stop offset="100%" stop-color="#F2DF99" />
+                  </linearGradient>
+                  <linearGradient id="blueGradK" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#7DD3FC" />
+                    <stop offset="100%" stop-color="#2563EB" />
+                  </linearGradient>
+                </defs>
+                <g transform="translate(10, 15)">
+                  <!-- 4 vertical ellipses -->
+                  <ellipse cx="24" cy="90" rx="6" ry="30" fill="#ffffff" />
+                  <ellipse cx="54" cy="90" rx="9" ry="46" fill="#ffffff" />
+                  <ellipse cx="88" cy="90" rx="12" ry="62" fill="#ffffff" />
+                  <ellipse cx="126" cy="90" rx="15" ry="78" fill="#ffffff" />
+                  
+                  <!-- Blue petal (bottom right) -->
+                  <ellipse cx="165" cy="132" rx="18" ry="65" transform="rotate(-52 165 132)" fill="url(#blueGradK)" opacity="0.9" />
+                  <!-- Gold petal (top right) drawn after blue so it stays on top -->
+                  <ellipse cx="165" cy="48" rx="18" ry="65" transform="rotate(52 165 48)" fill="url(#goldGradK)" opacity="0.95" />
+                </g>
+                <text x="120" y="235" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="48" text-anchor="middle" fill="#ffffff" letter-spacing="5">Kadri</text>
+              </svg>
+            </div>
+
+            <!-- Floating Stats -->
+            <div class="absolute top-8 right-0 glass-panel p-4 rounded-2xl z-30 animate-float-fast shadow-2xl border-white/10 backdrop-blur-md">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-gold/20 to-transparent flex items-center justify-center text-brand-gold border border-brand-gold/20">
+                  <i data-lucide="users" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-2xl font-bold text-white font-serif">+10k</p>
+                  <p class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Alunos Formados</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="absolute bottom-16 left-0 glass-panel p-4 rounded-2xl z-30 animate-float shadow-2xl border-white/10 backdrop-blur-md" style="animation-delay: 1.5s;">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-gold/20 to-transparent flex items-center justify-center text-brand-gold border border-brand-gold/20">
+                  <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-2xl font-bold text-white font-serif">100%</p>
+                  <p class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Foco no Mercado</p>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+    <!-- Gradient Bottom Divider -->
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent"></div>
+  </section>
+
+  <!-- SOBRE SECTION -->
+  <section id="sobre" class="py-24 bg-brand-dark relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-20 reveal">
+        <h2 class="text-xs font-bold tracking-[0.2em] uppercase text-brand-gold mb-3">Nossa Essência</h2>
+        <h3 class="text-4xl md:text-5xl font-serif font-bold text-white mb-6">Por que escolher a Kadri?</h3>
+        <p class="text-slate-400 max-w-2xl mx-auto text-lg font-light text-balance">
+          Temos orgulho de preparar nossos alunos para os desafios reais que o mercado exige, unindo teoria base e prática constante desde o primeiro dia.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass-panel p-10 rounded-[2rem] hover:border-brand-gold/40 hover:bg-white/[0.03] transition-all duration-500 group reveal delay-100 relative overflow-hidden flex flex-col items-start hover:-translate-y-2">
+          <div class="absolute -top-4 -right-4 p-8 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:scale-110 group-hover:rotate-12 duration-700">
+            <i data-lucide="target" class="w-40 h-40 text-white"></i>
+          </div>
+          <div class="w-14 h-14 bg-brand-gold/10 rounded-2xl flex items-center justify-center mb-8 border border-brand-gold/20 group-hover:scale-110 transition-transform duration-500 shadow-inner text-brand-gold">
+            <i data-lucide="target" class="w-6 h-6"></i>
+          </div>
+          <h4 class="text-xl font-bold text-white mb-4 font-serif">Nossa Missão</h4>
+          <p class="text-slate-400 text-sm leading-relaxed font-light">
+            Capacitar você através de um ensino dinâmico, direto ao ponto e focado na empregabilidade imediata. Seu resultado é a nossa maior meta.
+          </p>
+        </div>
+        
+        <div class="glass-panel p-10 rounded-[2rem] hover:border-brand-gold/40 hover:bg-white/[0.03] transition-all duration-500 group reveal delay-200 relative overflow-hidden flex flex-col items-start hover:-translate-y-2">
+          <div class="absolute -top-4 -right-4 p-8 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:scale-110 group-hover:rotate-12 duration-700">
+            <i data-lucide="laptop" class="w-40 h-40 text-white"></i>
+          </div>
+          <div class="w-14 h-14 bg-brand-gold/10 rounded-2xl flex items-center justify-center mb-8 border border-brand-gold/20 group-hover:scale-110 transition-transform duration-500 shadow-inner text-brand-gold">
+            <i data-lucide="laptop" class="w-6 h-6"></i>
+          </div>
+          <h4 class="text-xl font-bold text-white mb-4 font-serif">100% Prático</h4>
+          <p class="text-slate-400 text-sm leading-relaxed font-light">
+            Fuja de teorias massantes. Aqui você aprende botando a mão na massa com projetos reais que já podem compor seu portfólio profissional.
+          </p>
+        </div>
+        
+        <div class="glass-panel p-10 rounded-[2rem] hover:border-brand-gold/40 hover:bg-white/[0.03] transition-all duration-500 group reveal delay-300 relative overflow-hidden flex flex-col items-start hover:-translate-y-2">
+          <div class="absolute -top-4 -right-4 p-8 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:scale-110 group-hover:rotate-12 duration-700">
+            <i data-lucide="award" class="w-40 h-40 text-white"></i>
+          </div>
+          <div class="w-14 h-14 bg-brand-gold/10 rounded-2xl flex items-center justify-center mb-8 border border-brand-gold/20 group-hover:scale-110 transition-transform duration-500 shadow-inner text-brand-gold">
+            <i data-lucide="award" class="w-6 h-6"></i>
+          </div>
+          <h4 class="text-xl font-bold text-white mb-4 font-serif">Amplo Valor</h4>
+          <p class="text-slate-400 text-sm leading-relaxed font-light">
+            Evolua e saia com um certificado de alto peso, atestando suas práticas. Um diferencial competitivo que impulsiona entrevistas.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CURSOS SECTION -->
+  <section id="cursos" class="py-12 bg-brand-card relative">
+    <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <div class="text-center mb-8 reveal">
+        <p class="text-brand-gold text-xs font-bold tracking-[0.2em] uppercase mb-4">Mais Conhecimento</p>
+        <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-6">Nossas <span class="text-gradient">Formações</span></h2>
+        <p class="text-slate-400 max-w-2xl mx-auto font-light text-balance">
+          Catálogo completo de cursos desenhados para todas as idades e objetivos profissionais. Escolha seu caminho de sucesso e explore!
+        </p>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="flex flex-col items-center mb-6 gap-4 reveal delay-100">
+        <div class="relative w-full max-w-2xl group">
+          <div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none transition-colors group-focus-within:text-brand-gold">
+            <i data-lucide="search" class="h-5 w-5 text-slate-400 group-focus-within:text-brand-gold transition-colors"></i>
+          </div>
+          <input
+            id="search-input"
+            type="text"
+            class="w-full bg-brand-dark/50 border border-white/10 text-white rounded-2xl pl-14 pr-6 py-4 focus:outline-none focus:border-brand-gold/50 focus:ring-1 focus:ring-brand-gold/50 transition-all font-light shadow-inner placeholder:text-slate-500"
+            placeholder="Buscar por programação, design, cursos livres..."
+          />
+        </div>
+
+        <div id="categorias-container" class="flex flex-wrap justify-center gap-2 max-w-4xl">
+          <!-- Categories buttons injected via JS -->
+        </div>
+        
+        <div class="w-full text-center">
+          <p id="result-count" class="text-xs text-brand-gold/70 font-medium tracking-wide uppercase"></p>
+        </div>
+      </div>
+
+      <!-- Grid Results -->
+      <div id="courses-container" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 reveal delay-200">
+        <!-- JS render -->
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS SECTION -->
+  <section id="depoimentos" class="py-32 bg-brand-dark overflow-hidden relative">
+    <div class="absolute left-0 top-1/4 w-[500px] h-[500px] bg-brand-gold/5 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <div class="text-center mb-20 reveal">
+        <h2 class="text-xs font-bold tracking-[0.2em] uppercase text-brand-gold mb-4">Experiências Reais</h2>
+        <h3 class="text-4xl md:text-5xl font-serif font-bold text-white text-balance">Histórias de <span class="text-gradient">Sucesso</span></h3>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Depoimento 1 -->
+        <div class="glass-panel p-8 rounded-3xl relative reveal delay-100 flex flex-col h-full border-t border-white/10 hover:border-brand-gold/20 transition-colors">
+          <i data-lucide="quote" class="absolute top-6 right-6 w-16 h-16 text-white/5 rotate-180 z-0"></i>
+          <div class="flex gap-1 mb-8 text-brand-gold z-10">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="text-slate-300 text-lg font-serif italic mb-8 relative z-10 leading-relaxed flex-grow font-light">
+            "A Kadri transformou minha vida. Com as aulas focadas no mercado, consegui minha primeira vaga como desenvolvedor júnior antes mesmo de terminar o curso!"
+          </p>
+          <div class="flex items-center gap-4 mt-auto pt-6 border-t border-white/5 z-10">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=150&h=150&q=80" alt="Rafael Costa" class="w-12 h-12 rounded-full object-cover border-2 border-brand-gold/30 p-0.5" />
+            <div>
+              <p class="text-white font-bold text-sm tracking-wide">Rafael Costa</p>
+              <p class="text-brand-gold text-xs font-semibold">Desenvolvedor Full Stack</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Depoimento 2 -->
+        <div class="glass-panel p-8 rounded-3xl relative reveal delay-200 flex flex-col h-full border-t border-white/10 hover:border-brand-gold/20 transition-colors">
+          <i data-lucide="quote" class="absolute top-6 right-6 w-16 h-16 text-white/5 rotate-180 z-0"></i>
+          <div class="flex gap-1 mb-8 text-brand-gold z-10">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="text-slate-300 text-lg font-serif italic mb-8 relative z-10 leading-relaxed flex-grow font-light">
+            "Os professores são incríveis e a estrutura é nota 10. Hoje atuo como freelancer criando identidades visuais e não me arrependo de ter começado pela Kadri."
+          </p>
+          <div class="flex items-center gap-4 mt-auto pt-6 border-t border-white/5 z-10">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fit=crop&w=150&h=150&q=80" alt="Mariana Alves" class="w-12 h-12 rounded-full object-cover border-2 border-brand-gold/30 p-0.5" />
+            <div>
+              <p class="text-white font-bold text-sm tracking-wide">Mariana Alves</p>
+              <p class="text-brand-gold text-xs font-semibold">Design Gráfico</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Depoimento 3 -->
+        <div class="glass-panel p-8 rounded-3xl relative reveal delay-300 flex flex-col h-full border-t border-white/10 hover:border-brand-gold/20 transition-colors">
+          <i data-lucide="quote" class="absolute top-6 right-6 w-16 h-16 text-white/5 rotate-180 z-0"></i>
+          <div class="flex gap-1 mb-8 text-brand-gold z-10">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="text-slate-300 text-lg font-serif italic mb-8 relative z-10 leading-relaxed flex-grow font-light">
+            "Diferente de outros lugares, aqui aprendi praticando. O conhecimento adquirido me fez ser promovido no emprego. Muito obrigado equipe Kadri!"
+          </p>
+          <div class="flex items-center gap-4 mt-auto pt-6 border-t border-white/5 z-10">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fit=crop&w=150&h=150&q=80" alt="Thiago Mendes" class="w-12 h-12 rounded-full object-cover border-2 border-brand-gold/30 p-0.5" />
+            <div>
+              <p class="text-white font-bold text-sm tracking-wide">Thiago Mendes</p>
+              <p class="text-brand-gold text-xs font-semibold">Setor Financeiro</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICADO SECTION -->
+  <section id="certificado" class="py-24 relative overflow-hidden bg-brand-card">
+    <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <div class="glass-panel bg-gradient-to-br from-brand-dark to-[#0B1021] rounded-[2.5rem] p-8 md:p-16 flex flex-col lg:flex-row items-center gap-16 shadow-2xl relative overflow-hidden border border-brand-gold/10 reveal">
+        
+        <!-- Glow Backing -->
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-brand-gold/10 rounded-full blur-[80px] pointer-events-none"></div>
+
+        <div class="w-full lg:w-1/2 flex justify-center relative perspective-[1000px]">
+          <div class="absolute inset-0 bg-brand-gold/10 blur-[80px] rounded-full scale-75"></div>
+          
+          <!-- Certificado 3D Art -->
+          <div class="relative w-full max-w-md aspect-[1.4] bg-gradient-to-br from-[#1A2247] to-brand-dark rounded-xl flex flex-col items-center justify-center p-8 text-center border border-brand-gold/30 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] transform -rotate-2 hover:rotate-0 transition-transform duration-700 ease-out z-10 ring-1 ring-white/5 cursor-pointer">
+            <div class="absolute inset-2 border border-brand-gold/20 rounded-lg pointer-events-none"></div>
+            <div class="absolute inset-3 border border-brand-gold/5 rounded-md pointer-events-none"></div>
+            
+            <svg viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg" class="h-14 w-auto mb-5">
+              <defs>
+                <linearGradient id="goldGradCertK" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#C59438" />
+                  <stop offset="50%" stop-color="#EBC472" />
+                  <stop offset="100%" stop-color="#F2DF99" />
+                </linearGradient>
+                <linearGradient id="blueGradCertK" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#7DD3FC" />
+                  <stop offset="100%" stop-color="#2563EB" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(10, 15)">
+                <!-- 4 vertical ellipses -->
+                <ellipse cx="24" cy="90" rx="6" ry="30" fill="#ffffff" />
+                <ellipse cx="54" cy="90" rx="9" ry="46" fill="#ffffff" />
+                <ellipse cx="88" cy="90" rx="12" ry="62" fill="#ffffff" />
+                <ellipse cx="126" cy="90" rx="15" ry="78" fill="#ffffff" />
+                
+                <!-- Blue petal (bottom right) -->
+                <ellipse cx="165" cy="132" rx="18" ry="65" transform="rotate(-52 165 132)" fill="url(#blueGradCertK)" opacity="0.9" />
+                <!-- Gold petal (top right) drawn after blue so it stays on top -->
+                <ellipse cx="165" cy="48" rx="18" ry="65" transform="rotate(52 165 48)" fill="url(#goldGradCertK)" opacity="0.95" />
+              </g>
+              <text x="120" y="235" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="48" text-anchor="middle" fill="#ffffff" letter-spacing="5">Kadri</text>
+            </svg>
+            <h4 class="text-2xl font-serif text-brand-gold uppercase tracking-[0.2em] mb-2 font-bold select-none text-glow">Certificado</h4>
+            <p class="text-white/50 text-[10px] uppercase tracking-[0.3em] mb-6 select-none font-sans">De Conclusão</p>
+            
+            <div class="w-32 h-[1px] bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent mb-6"></div>
+            
+            <p class="text-slate-400 text-[9px] uppercase tracking-widest max-w-[80%] leading-relaxed font-semibold select-none">
+              Válido em todo território nacional<br/>
+              <span class="text-brand-gold/80 mt-1 block">LDB 9.394/96</span>
+            </p>
+            
+            <div class="absolute bottom-6 right-6 opacity-80">
+              <div class="w-10 h-10 rounded-full border border-brand-gold/40 flex items-center justify-center bg-brand-gold/10">
+                <i data-lucide="award" class="w-5 h-5 text-brand-gold"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full lg:w-1/2 relative z-10">
+          <span class="text-brand-gold text-xs font-bold tracking-[0.2em] uppercase mb-4 block">Garantia de Qualidade</span>
+          <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">
+            Validação de peso <br/><span class="text-gradient italic font-light">Nacional</span>
+          </h2>
+          <p class="text-slate-400 mb-10 leading-relaxed text-lg font-light text-balance">
+            O certificado emitido pela Kadri é a chave para aprovação em processos seletivos e pode ser usado em faculdades como abono de horas exigidas.
+          </p>
+
+          <div class="grid sm:grid-cols-2 gap-6 mb-10">
+            <div class="glass-panel hover:bg-white/5 transition-colors rounded-2xl p-6 border border-white/5">
+              <i data-lucide="briefcase" class="w-6 h-6 text-brand-gold mb-4"></i>
+              <h4 class="text-white font-bold text-sm mb-2">Destaque no CV</h4>
+              <p class="text-slate-400 text-xs leading-relaxed font-light">Comprove o domínio de ferramentas cruciais para empresas.</p>
+            </div>
+            <div class="glass-panel hover:bg-white/5 transition-colors rounded-2xl p-6 border border-white/5">
+              <i data-lucide="book-open" class="w-6 h-6 text-brand-gold mb-4"></i>
+              <h4 class="text-white font-bold text-sm mb-2">Horas Extras</h4>
+              <p class="text-slate-400 text-xs leading-relaxed font-light">Aceito com horas normativas complementares em faculdades.</p>
+            </div>
+          </div>
+          
+          <a href="#contato" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/5 text-white border border-white/10 font-bold rounded-xl hover:bg-white/10 transition-all font-sans group">
+            Saber mais detalhes
+            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO SECTION -->
+  <section id="contato" class="py-24 bg-brand-dark relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass-panel rounded-[2.5rem] border border-white/5 p-8 md:p-16 reveal relative overflow-hidden">
+        <!-- Glow backing form -->
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-gold/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="grid lg:grid-cols-2 gap-16 relative z-10">
+          
+          <!-- Informações -->
+          <div>
+            <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">Chegou a hora.<br/><span class="text-gradient">Fale Conosco.</span></h2>
+            <p class="text-slate-400 mb-10 text-base leading-relaxed font-light text-balance">
+              Nossa equipe experiente vai te orientar com base no que o mercado pede hoje. Preencha e descubra o melhor curso.
+            </p>
+
+            <div class="space-y-8">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 text-brand-gold shadow-inner">
+                  <i data-lucide="map-pin" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Endereço</p>
+                  <p class="text-slate-300 text-sm font-light">Av. Brasil, 1500 - Centro<br/>São Paulo, SP</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 text-brand-gold shadow-inner">
+                  <i data-lucide="phone" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Telefone / WhatsApp</p>
+                  <p class="text-slate-300 text-sm font-light">(11) 99999-9999<br/>(11) 3333-3333</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 text-brand-gold shadow-inner">
+                  <i data-lucide="mail" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">E-mail</p>
+                  <p class="text-slate-300 text-sm font-light">contato@kadri.com.br<br/>matriculas@kadri.com.br</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulário -->
+          <div class="bg-brand-dark/80 p-8 md:p-10 rounded-3xl border border-white/5 shadow-2xl backdrop-blur-md">
+            <h3 class="text-xl font-bold text-white mb-8 font-serif">Envie agora sua dúvida</h3>
+            <form id="contact-form" class="space-y-5">
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2 font-sans">Nome Completo</label>
+                <input 
+                  type="text" 
+                  name="nome"
+                  class="w-full bg-black/40 border border-white/10 text-white rounded-xl px-4 py-3.5 focus:outline-none focus:border-brand-gold/50 focus:ring-1 focus:ring-brand-gold/50 transition-all font-light placeholder:text-slate-600"
+                  placeholder="Ex: Ana Souza"
+                  required
+                />
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2 font-sans">E-mail</label>
+                  <input 
+                    type="email" 
+                    name="email"
+                    class="w-full bg-black/40 border border-white/10 text-white rounded-xl px-4 py-3.5 focus:outline-none focus:border-brand-gold/50 focus:ring-1 focus:ring-brand-gold/50 transition-all font-light placeholder:text-slate-600"
+                    placeholder="seu@email.com"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2 font-sans">WhatsApp</label>
+                  <input 
+                    type="tel" 
+                    name="telefone"
+                    class="w-full bg-black/40 border border-white/10 text-white rounded-xl px-4 py-3.5 focus:outline-none focus:border-brand-gold/50 focus:ring-1 focus:ring-brand-gold/50 transition-all font-light placeholder:text-slate-600"
+                    placeholder="(00) 00000-0000"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2 font-sans">Curso de Interesse</label>
+                <select 
+                  name="curso"
+                  id="curso-select"
+                  class="w-full bg-black/40 border border-white/10 text-slate-300 rounded-xl px-4 py-3.5 focus:outline-none focus:border-brand-gold/50 focus:ring-1 focus:ring-brand-gold/50 transition-all font-light appearance-none" 
+                  required
+                >
+                  <option value="" disabled selected class="text-slate-500">Selecione uma Formação</option>
+                  <!-- JS Injects Options -->
+                  <option value="outros">Quero conhecer as opções</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2 font-sans">Mensagem Detalhada (Opcional)</label>
+                <textarea 
+                  name="mensagem"
+                  class="w-full bg-black/40 border border-white/10 text-white rounded-xl px-4 py-3.5 focus:outline-none focus:border-brand-gold/50 focus:ring-1 focus:ring-brand-gold/50 transition-all resize-none h-24 font-light placeholder:text-slate-600"
+                  placeholder="Como podemos ajudar a moldar seu futuro?"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="w-full bg-brand-gold text-brand-dark font-bold rounded-xl px-4 py-4 hover:bg-brand-goldLight transition-all transform hover:-translate-y-1 shadow-[0_5px_20px_-5px_rgba(212,173,82,0.4)] mt-2 flex justify-center items-center gap-2">
+                Enviar Direct para WhatsApp
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-brand-dark border-t border-white/5 pt-16 pb-8 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-0 mb-6 -ml-2">
+            <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" class="h-8 w-auto md:h-10 hover:scale-105 transition-transform duration-300">
+              <defs>
+                <linearGradient id="goldGradFoot" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#C59438" />
+                  <stop offset="50%" stop-color="#EBC472" />
+                  <stop offset="100%" stop-color="#F2DF99" />
+                </linearGradient>
+                <linearGradient id="blueGradFoot" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#7DD3FC" />
+                  <stop offset="100%" stop-color="#2563EB" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(10, 15)">
+                <ellipse cx="24" cy="90" rx="6" ry="30" fill="#ffffff" />
+                <ellipse cx="54" cy="90" rx="9" ry="46" fill="#ffffff" />
+                <ellipse cx="88" cy="90" rx="12" ry="62" fill="#ffffff" />
+                <ellipse cx="126" cy="90" rx="15" ry="78" fill="#ffffff" />
+                <ellipse cx="165" cy="132" rx="18" ry="65" transform="rotate(-52 165 132)" fill="url(#blueGradFoot)" opacity="0.9" />
+                <ellipse cx="165" cy="48" rx="18" ry="65" transform="rotate(52 165 48)" fill="url(#goldGradFoot)" opacity="0.95" />
+              </g>
+            </svg>
+            <span class="text-xl font-bold tracking-tight text-white font-serif ml-0">adri</span>
+          </div>
+          <p class="text-sm text-slate-400 mb-8 leading-relaxed font-light">
+            O ponto de partida para o seu futuro. Transformando potencial em carreiras consolidadas desde 2012.
+          </p>
+          <div class="flex gap-4">
+            <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-brand-dark hover:bg-brand-gold hover:border-brand-gold transition-all" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:scale-110"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-brand-dark hover:bg-brand-gold hover:border-brand-gold transition-all" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:scale-110"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-brand-dark hover:bg-brand-gold hover:border-brand-gold transition-all" aria-label="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:scale-110"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-6 font-serif">Especialidades</h4>
+          <ul class="space-y-4">
+            <li><a href="#" class="text-sm text-slate-400 hover:text-brand-gold transition-colors font-light">Programação & TI</a></li>
+            <li><a href="#" class="text-sm text-slate-400 hover:text-brand-gold transition-colors font-light">Design & Criação</a></li>
+            <li><a href="#" class="text-sm text-slate-400 hover:text-brand-gold transition-colors font-light">Administração & Vendas</a></li>
+            <li><a href="#" class="text-sm text-slate-400 hover:text-brand-gold transition-colors font-light">Inteligência Artificial</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-6 font-serif">A Instituição</h4>
+          <ul class="space-y-4">
+            <li><a href="#sobre" class="text-sm text-slate-400 hover:text-brand-gold transition-colors font-light">Nossa História</a></li>
+            <li><a href="#depoimentos" class="text-sm text-slate-400 hover:text-brand-gold transition-colors font-light">Depoimentos</a></li>
+            <li><a href="#" class="text-sm text-slate-400 hover:text-brand-gold transition-colors font-light">Vagas P/ Professores</a></li>
+            <li><a href="#" class="text-sm text-slate-400 hover:text-brand-gold transition-colors font-light">Portal do Aluno</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-6 font-serif">Atendimento</h4>
+          <ul class="space-y-4">
+            <li class="text-sm text-slate-400 font-light flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-brand-gold"></i> Seg - Sex: 09h às 20h</li>
+            <li class="text-sm text-slate-400 font-light flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-brand-gold"></i> Sáb: 09h às 15h</li>
+            <li class="text-sm text-brand-gold font-semibold mt-6 tracking-wide">suporte@kadri.com.br</li>
+          </ul>
+        </div>
+
+      </div>
+      
+      <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-[11px] text-slate-600 uppercase tracking-widest font-semibold flex items-center gap-2">
+          © <script>document.write(new Date().getFullYear())</script> Kadri Educação. Todos os direitos reservados.
+        </p>
+        <p class="text-[11px] text-slate-600 uppercase tracking-widest">
+          CNPJ: 00.000.000/0000-00
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating -->
+  <div id="whatsapp-wrapper" class="fixed z-50 transition-all duration-500 opacity-0 translate-y-10 pointer-events-none" style="bottom: 1.5rem; right: 1.5rem;">
+    <a
+      id="whatsapp-btn"
+      href="https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20os%20cursos!"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="w-14 h-14 md:w-16 md:h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_5px_25px_rgba(37,211,102,0.4)] hover:scale-110 hover:shadow-[0_10px_35px_rgba(37,211,102,0.6)] transition-all duration-300 animate-float"
+      aria-label="Contato pelo WhatsApp"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    });
+
+    // Scroll Animations Observer
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Navbar Scroll Blur Config
+    const navbar = document.getElementById('navbar');
+    const navInner = document.getElementById('nav-inner');
+    const navText = document.getElementById('nav-brand-text');
+    const whatsappWrapper = document.getElementById('whatsapp-wrapper');
+    window.addEventListener('scroll', () => {
+      // Navbar visibility
+      if (window.scrollY > 20) {
+        navbar.classList.add('bg-brand-card/90', 'backdrop-blur-lg', 'shadow-2xl');
+        navbar.classList.replace('border-transparent', 'border-white/5');
+        navInner.classList.remove('h-20', 'md:h-24');
+        navInner.classList.add('h-16', 'md:h-20');
+        navText.classList.remove('opacity-0', '-translate-x-2', 'max-w-0');
+        navText.classList.add('opacity-100', 'translate-x-0', 'max-w-[100px]');
+      } else {
+        navbar.classList.remove('bg-brand-card/90', 'backdrop-blur-lg', 'shadow-2xl');
+        navbar.classList.replace('border-white/5', 'border-transparent');
+        navInner.classList.remove('h-16', 'md:h-20');
+        navInner.classList.add('h-20', 'md:h-24');
+        navText.classList.add('opacity-0', '-translate-x-2', 'max-w-0');
+        navText.classList.remove('opacity-100', 'translate-x-0', 'max-w-[100px]');
+      }
+
+      // WhatsApp Button visibility (shows after scrolling 400px)
+      if (window.scrollY > 400) {
+        whatsappWrapper.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+        whatsappWrapper.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+      } else {
+        whatsappWrapper.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+        whatsappWrapper.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+      }
+    });
+
+    // Portal do Aluno Visibility Logic
+    const PORTAL_URL = 'https://portal.kadri.com.br'; // Altere aqui a URL do portal
+    const portalBtnDesktop = document.getElementById('portal-aluno-desktop');
+    const portalBtnMobile = document.getElementById('portal-aluno-mobile');
+
+    if (PORTAL_URL) {
+      if (portalBtnDesktop) {
+        portalBtnDesktop.href = PORTAL_URL;
+        portalBtnDesktop.classList.remove('hidden');
+      }
+      if (portalBtnMobile) {
+        portalBtnMobile.href = PORTAL_URL;
+        portalBtnMobile.classList.remove('hidden');
+      }
+    }
+
+    // Mobile Menu Toggle logic
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconMenu = document.getElementById('icon-menu');
+    const iconClose = document.getElementById('icon-close');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      iconMenu.classList.toggle('hidden');
+      iconClose.classList.toggle('hidden');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        iconMenu.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      });
+    });
+
+    // Dummy Mock Data para Cursos e Filters
+    const categorias = [
+      "TODOS", "INFORMÁTICA & TI", "PROGRAMAÇÃO", "GESTÃO & NEGÓCIOS", 
+      "DESIGN & CRIAÇÃO", "INTELIGÊNCIA ARTIFICIAL", "SAÚDE", "IDIOMAS", 
+      "KIDS", "MARKETING"
+    ];
+
+    const cursosLista = [
+      {
+        id: 1, categoriaRef: "INFORMÁTICA & TI", categoriaDisplay: "INFORMÁTICA", titulo: "Informática Essencial",
+        desc: "Capacita iniciantes a dominar sem medo as ferramentas clássicas e necessárias.", carga: "119H", imagem: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 2, categoriaRef: "GESTÃO & NEGÓCIOS", categoriaDisplay: "ADMINISTRAÇÃO", titulo: "Excel Corporate 365",
+        desc: "Planilhas, gestão e automação simples para ambientes financeiros.", carga: "14H", imagem: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 3, categoriaRef: "INFORMÁTICA & TI", categoriaDisplay: "INFORMÁTICA", titulo: "Master em Excel",
+        desc: "Vá além: tabelas dinâmicas, lógicas de negócios, fluxos e indicadores ágeis.", carga: "21H", imagem: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 4, categoriaRef: "INFORMÁTICA & TI", categoriaDisplay: "SECRETARIADO", titulo: "Word Plus",
+        desc: "Documentação de negócios formatações automáticas e relatórios rápidos.", carga: "16H", imagem: "https://images.unsplash.com/photo-1455390582262-044cdead2708?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 5, categoriaRef: "PROGRAMAÇÃO", categoriaDisplay: "ENGENHARIA DEV", titulo: "Backend Java",
+        desc: "A base e o topo da cadeia para APIs de grandes corporações bancárias e tech.", carga: "82H", imagem: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 6, categoriaRef: "DESIGN & CRIAÇÃO", categoriaDisplay: "ART & CREATIVE", titulo: "Pack Adobe Master",
+        desc: "Os princípios e as práticas avançadas em manipulação de imagem e vetor.", carga: "55H", imagem: "https://images.unsplash.com/photo-1626785774573-4b799315345d?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 7, categoriaRef: "INTELIGÊNCIA ARTIFICIAL", categoriaDisplay: "NOVA ECONOMIA", titulo: "IA Prompt Maker",
+        desc: "Pare de perder tempo. Crie agentes baseados em GPT para sua produtividade.", carga: "12H", imagem: "https://images.unsplash.com/photo-1677442136019-21780ecad995?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 8, categoriaRef: "IDIOMAS", categoriaDisplay: "FLUÊNCIA", titulo: "Inglês para Vida Real",
+        desc: "Conversação, imersão em vocabulário corporativo para carreiras sem limites.", carga: "60H", imagem: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 9, categoriaRef: "PROGRAMAÇÃO", categoriaDisplay: "WEB DEV", titulo: "React Masterclass",
+        desc: "Domine a biblioteca mais popular do mercado e crie interfaces de alto nível.", carga: "45H", imagem: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 10, categoriaRef: "MARKETING", categoriaDisplay: "ESTRATÉGIA", titulo: "SEO Avançado",
+        desc: "Coloque seu negócio no topo das buscas orgânicas com técnicas reais.", carga: "20H", imagem: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 11, categoriaRef: "GESTÃO & NEGÓCIOS", categoriaDisplay: "LIDERANÇA", titulo: "Gestão de Equipes",
+        desc: "Habilidades comportamentais e técnicas para novos líderes em ascensão.", carga: "30H", imagem: "https://images.unsplash.com/photo-1552664730-d307ca884978?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 12, categoriaRef: "KIDS", categoriaDisplay: "EDUCAÇÃO", titulo: "Robótica para Kids",
+        desc: "Introdução lúdica ao mundo da tecnologia e lógica para crianças.", carga: "24H", imagem: "https://images.unsplash.com/photo-1531482615713-2afd69097998?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 13, categoriaRef: "SAÚDE", categoriaDisplay: "BEM-ESTAR", titulo: "Primeiros Socorros",
+        desc: "Conhecimentos vitais para agir em situações de emergência com segurança.", carga: "40H", imagem: "https://images.unsplash.com/photo-1516549655169-df83a0774514?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 14, categoriaRef: "DESIGN & CRIAÇÃO", categoriaDisplay: "UX/UI", titulo: "Design de Interfaces",
+        desc: "Aprenda a criar jornadas incríveis e interfaces que convertem usuários.", carga: "50H", imagem: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 15, categoriaRef: "MARKETING", categoriaDisplay: "SOCIAL MEDIA", titulo: "Gestão de Redes Sociais",
+        desc: "Estratégias para crescer marcas e engajar comunidades digitalmente.", carga: "32H", imagem: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?fit=crop&w=600&h=400&q=80"
+      },
+      {
+        id: 16, categoriaRef: "INFORMÁTICA & TI", categoriaDisplay: "HARDWARE", titulo: "Montagem e Manutenção",
+        desc: "Domine o hardware e aprenda a diagnosticar e consertar computadores.", carga: "48H", imagem: "https://images.unsplash.com/photo-1588632657316-241579624d4e?fit=crop&w=600&h=400&q=80"
+      }
+    ];
+
+    // População Dinâmica do Select do forms
+    const cursoSelect = document.getElementById('curso-select');
+    cursosLista.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.titulo;
+      opt.textContent = c.titulo;
+      opt.className = "text-slate-200"
+      cursoSelect.insertBefore(opt, cursoSelect.lastElementChild);
+    });
+
+    // Funções e lógicas da galeria de cursos
+    const categoriasContainer = document.getElementById('categorias-container');
+    const searchInput = document.getElementById('search-input');
+    const coursesContainer = document.getElementById('courses-container');
+    const resultCount = document.getElementById('result-count');
+    
+    // Category Pagination Controls Container
+    const catNavContainer = document.createElement('div');
+    catNavContainer.id = 'cat-nav-container';
+    catNavContainer.className = 'flex justify-center items-center gap-4 mt-2 mb-2 w-full';
+    categoriasContainer.parentNode.insertBefore(catNavContainer, categoriasContainer.nextSibling);
+
+    // Pagination Controls Container
+    const paginationContainer = document.createElement('div');
+    paginationContainer.id = 'pagination-container';
+    paginationContainer.className = 'flex justify-center items-center gap-2 mt-12 reveal';
+    coursesContainer.parentNode.appendChild(paginationContainer);
+    if (typeof observer !== 'undefined') observer.observe(paginationContainer);
+
+    let currentCategory = 'TODOS';
+    let currentSearch = '';
+    let currentPage = 1;
+    let currentCatPage = 1;
+    const itemsPerPage = 4; // 1 row x 4 columns
+    const catsPerPage = 8; // Limite de 2 linhas (~4 por linha) para exibir paginação
+
+    function renderCategories() {
+      categoriasContainer.innerHTML = '';
+      
+      const startIndex = (currentCatPage - 1) * catsPerPage;
+      const paginatedCats = categorias.slice(startIndex, startIndex + catsPerPage);
+      
+      paginatedCats.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.dataset.cat = cat;
+        const isActive = cat === currentCategory;
+        
+        btn.className = `filter-btn px-4 py-2 text-[10px] sm:text-xs font-bold rounded-full transition-all uppercase tracking-wider shadow-sm 
+          ${isActive ? 'bg-brand-gold text-brand-dark scale-105 shadow-[0_0_15px_rgba(212,173,82,0.4)]' : 'glass-panel text-slate-400 hover:text-white hover:bg-white/10'}`;
+        
+        btn.textContent = cat;
+        btn.addEventListener('click', (e) => {
+          currentCategory = cat;
+          currentPage = 1;
+          renderCategories();
+          renderCourses();
+        });
+        categoriasContainer.appendChild(btn);
+      });
+
+      // Render Category Nav
+      catNavContainer.innerHTML = '';
+      const totalCatPages = Math.ceil(categorias.length / catsPerPage);
+      
+      // Clear Filter Button
+      const clearBtn = document.createElement('button');
+      clearBtn.className = 'px-3 py-1.5 text-[10px] sm:text-xs font-bold rounded-full transition-all uppercase tracking-wider glass-panel text-slate-300 hover:text-white border-red-500/30 hover:bg-red-500/20 mr-2 flex items-center gap-1';
+      clearBtn.innerHTML = '<i data-lucide="filter-x" class="w-3.5 h-3.5"></i>Limpa Filtro';
+      clearBtn.onclick = () => {
+        currentCategory = 'TODOS';
+        currentSearch = '';
+        searchInput.value = '';
+        currentPage = 1;
+        currentCatPage = 1;
+        renderCategories();
+        renderCourses();
+      };
+      
+      // Only show clear button if a filter is active
+      if (currentCategory !== 'TODOS' || currentSearch.trim() !== '') {
+        catNavContainer.appendChild(clearBtn);
+      }
+      
+      if (totalCatPages > 1) {
+        const prevBtn = document.createElement('button');
+        prevBtn.className = `p-2 rounded-full transition-all ${currentCatPage === 1 ? 'opacity-20 cursor-not-allowed' : 'glass-panel text-brand-gold hover:bg-brand-gold/10'}`;
+        prevBtn.innerHTML = '<i data-lucide="chevron-left" class="w-4 h-4"></i>';
+        prevBtn.disabled = currentCatPage === 1;
+        prevBtn.onclick = () => {
+          if (currentCatPage > 1) {
+            currentCatPage--;
+            renderCategories();
+          }
+        };
+
+        const nextBtn = document.createElement('button');
+        nextBtn.className = `p-2 rounded-full transition-all ${currentCatPage === totalCatPages ? 'opacity-20 cursor-not-allowed' : 'glass-panel text-brand-gold hover:bg-brand-gold/10'}`;
+        nextBtn.innerHTML = '<i data-lucide="chevron-right" class="w-4 h-4"></i>';
+        nextBtn.disabled = currentCatPage === totalCatPages;
+        nextBtn.onclick = () => {
+          if (currentCatPage < totalCatPages) {
+            currentCatPage++;
+            renderCategories();
+          }
+        };
+
+        catNavContainer.appendChild(prevBtn);
+        
+        // Page indicator
+        const indicator = document.createElement('span');
+        indicator.className = 'text-[10px] font-bold text-slate-500 uppercase tracking-widest';
+        indicator.textContent = `${currentCatPage} / ${totalCatPages}`;
+        catNavContainer.appendChild(indicator);
+        
+        catNavContainer.appendChild(nextBtn);
+        
+        if (window.lucide) window.lucide.createIcons();
+      }
+    }
+
+    function renderPagination(totalItems) {
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      paginationContainer.innerHTML = '';
+
+      if (totalPages <= 1) return;
+
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.className = `w-10 h-10 rounded-xl font-bold text-sm transition-all border ${
+          currentPage === i 
+            ? 'bg-brand-gold text-brand-dark border-brand-gold shadow-[0_0_15px_rgba(212,173,82,0.4)]' 
+            : 'glass-panel text-slate-400 border-white/10 hover:text-white hover:bg-white/5'
+        }`;
+        btn.textContent = i;
+        btn.addEventListener('click', () => {
+          currentPage = i;
+          renderCourses();
+          // Scroll back to courses section only on mobile/tablet
+          if (window.innerWidth < 1024) {
+             document.getElementById('cursos').scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+        paginationContainer.appendChild(btn);
+      }
+    }
+
+    function renderCourses() {
+      const filtered = cursosLista.filter(c => {
+        const matchCat = currentCategory === 'TODOS' || c.categoriaRef === currentCategory;
+        const matchSearch = c.titulo.toLowerCase().includes(currentSearch.toLowerCase()) || 
+                            c.desc.toLowerCase().includes(currentSearch.toLowerCase());
+        return matchCat && matchSearch;
+      });
+
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const paginatedItems = filtered.slice(startIndex, startIndex + itemsPerPage);
+
+      coursesContainer.innerHTML = '';
+      
+      paginatedItems.forEach((curso, index) => {
+        const waLink = "https://wa.me/5511999999999?text=" + encodeURIComponent("Olá, tenho interesse no curso de " + curso.titulo + "!");
+        
+        const card = document.createElement('div');
+        card.className = `group relative flex flex-col bg-[#0b0f19] rounded-3xl border border-white/5 hover:border-brand-gold/40 transition-all duration-500 overflow-hidden hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(212,173,82,0.2)] h-full opacity-0 animate-[fadeUp_0.5s_ease-out_forwards]`;
+        card.style.animationDelay = `${index * 50}ms`;
+
+        card.innerHTML = `
+          <div class="h-48 w-full overflow-hidden relative shrink-0">
+            <div class="absolute inset-0 bg-brand-dark/30 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"></div>
+            <img src="${curso.imagem}" alt="${curso.titulo}" referrerPolicy="no-referrer" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-transparent z-10 pointer-events-none opacity-90"></div>
+            <div class="absolute top-4 right-4 z-20">
+              <span class="px-3 py-1 bg-black/50 backdrop-blur-md border border-white/10 text-white rounded-full text-[10px] font-bold shadow-xl flex items-center gap-1">
+                <svg class="w-3 h-3 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                ${curso.carga}
+              </span>
+            </div>
+            <div class="absolute bottom-4 left-5 z-20">
+              <span class="px-2.5 py-1 backdrop-blur-md bg-brand-gold/90 text-brand-dark rounded-md text-[9px] font-bold tracking-[0.15em] uppercase shadow-xl font-sans inline-block">
+                ${curso.categoriaDisplay}
+              </span>
+            </div>
+          </div>
+          
+          <div class="flex flex-col p-6 flex-grow relative z-20 bg-[#0b0f19]">
+            <h3 class="text-xl font-bold text-white mb-2 font-serif group-hover:text-brand-gold transition-colors tracking-tight">${curso.titulo}</h3>
+            <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed font-light">${curso.desc}</p>
+            
+            <div class="flex flex-col mt-auto pt-4 border-t border-white/5">
+              <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="relative overflow-hidden w-full py-3 bg-white/[0.02] text-white border border-white/10 text-xs font-bold rounded-xl hover:bg-brand-gold hover:text-brand-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-brand-gold">
+                <span class="relative z-10 flex items-center gap-2">
+                  Matricular Agora
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        `;
+        coursesContainer.appendChild(card);
+      });
+
+      resultCount.innerHTML = `Mostrando <span class="text-white">${filtered.length}</span> ${filtered.length === 1 ? 'resultado' : 'resultados'}`;
+      renderPagination(filtered.length);
+    }
+
+    // Keyframes for Card entrance
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Eventos 
+    renderCategories();
+
+    searchInput.addEventListener('input', (e) => {
+      currentSearch = e.target.value;
+      currentPage = 1; // Reset to first page
+      renderCategories(); // Atualiza para exibir/esconder o botão "Limpa Filtro"
+      renderCourses();
+    });
+
+    renderCourses();
+
+    // Formulário Submit Alert & WA route
+    const form = document.getElementById('contact-form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = form.nome.value;
+      const email = form.email.value;
+      const telefone = form.telefone.value;
+      const curso = form.curso.value;
+      const mensagem = form.mensagem.value;
+
+      const text = "Olá, vim pelo portal da Kadri!\n\n*Nome:* " + nome + "\n*Telefone:* " + telefone + "\n*Desejo a formação:* " + (curso || 'Não especificada') + "\n\n" + (mensagem ? "*Detalhes:* " + mensagem : "");
+      window.open("https://wa.me/5511999999999?text=" + encodeURIComponent(text), '_blank');
+    });
+
+  </script>
+
+</body>
+
+</html>
